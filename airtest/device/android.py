@@ -124,11 +124,17 @@ class Monitor(object):
         return dict(TOTAL=total, FREE=free)
 
 class Device(object):
-    def __init__(self, serialno, addr=''):
+    def __init__(self, serialno, addr='',resolution=''):
+        #默认截图方式为pyadb，socket截图。
         self._snapshot_method = 'adb'
+        #获取设备UDID。
         self._serialno = serialno
         print 'SerialNo:', serialno
-
+        #获取设备屏幕分辨率
+        if resolution!='':
+            self.resolution = 'resolution'
+            print self.resolution
+        
         if addr:
             host, port = addr.split(':')
             self.adbclient = AdbClient(serialno, hostname=host, port=int(port))
@@ -185,6 +191,12 @@ class Device(object):
             # FIXME(ssx): image not rotate
             tmpname = '/data/local/tmp/airtest-tmp-snapshot.png'
             self.adbshell('screencap', '-p', tmpname)
+            self.adb('pull', tmpname, filename)
+            self.adbshell('rm', tmpname)
+        elif self._snapshot_method == 'minicap':
+            #'LD_LIBRARY_PATH=/data/local/tmp /data/local/tmp/minicap -P {} -s > /data/local/tmp/screen2.png''
+            tmpname = '/data/local/tmp/airtest-tmp-snapshot.png'
+            self.adbshell('LD_LIBRARY_PATH=/data/local/tmp /data/local/tmp/minicap -P', '-s >', tmpname)
             self.adb('pull', tmpname, filename)
             self.adbshell('rm', tmpname)
         else:
