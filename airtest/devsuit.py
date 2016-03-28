@@ -10,6 +10,7 @@ import json
 
 import cv2
 import aircv as ac
+import logging
 
 from . import base
 from . import proto
@@ -92,7 +93,7 @@ class DeviceSuit(object):
             res = ac.find_template(imsrc, imsch, self._threshold)
             if res:
                 point, score = res
-                print 'match result:', point, score
+                logging.DEBUG(point, score))
                 return point
             return None
 
