@@ -160,18 +160,20 @@ class Device(object):
         #     pass
 
         # install air-native
-        airnative = os.path.join(__dir__, '../binfiles/air-native')
-        md5sum = open(airnative+'.md5').read().strip()
-        try:
-            output = self.adbshell('md5', proto.AIRNATIVE)
-            arr = string.split(output, maxsplit=1)
-        except:
-            arr = [None]
-        if arr and md5sum != arr[0]:
-            self.adb('push', airnative, proto.AIRNATIVE)
-            self.adbshell('chmod', '755', proto.AIRNATIVE)
-
-        self._init_adbinput()
+        
+        #Commit by 皇甫春峰，2016.4.22，去除安装airnative以及adbkeyboard
+        #airnative = os.path.join(__dir__, '../binfiles/air-native')
+        #md5sum = open(airnative+'.md5').read().strip()
+        #try:
+        #    output = self.adbshell('md5', proto.AIRNATIVE)
+        #    arr = string.split(output, maxsplit=1)
+        #except:
+        #    arr = [None]
+        #if arr and md5sum != arr[0]:
+        #    self.adb('push', airnative, proto.AIRNATIVE)
+        #    self.adbshell('chmod', '755', proto.AIRNATIVE)
+        #
+        #self._init_adbinput()
 
     def _init_adbinput(self):
         apkfile = os.path.join(__dir__, '../binfiles/adb-keyboard.apk')
