@@ -93,7 +93,7 @@ class DeviceSuit(object):
             res = ac.find_template(imsrc, imsch, self._threshold)
             if res:
                 point, score = res
-                logging.DEBUG(point, score))
+                #logging.DEBUG(str(score))
                 return point
             return None
 
