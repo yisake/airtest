@@ -126,7 +126,7 @@ class Monitor(object):
 class Device(object):
     def __init__(self, serialno, addr='',resolution=''):
         #默认截图方式为pyadb，socket截图。
-        self._snapshot_method = 'adb'
+        self._snapshot_method = 'screencap'
         #获取设备UDID。
         self._serialno = serialno
         print 'SerialNo:', serialno
