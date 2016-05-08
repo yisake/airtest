@@ -124,16 +124,17 @@ ShiftCodes = {
 #class Device(Interface):
 class Device():
     ''' Interface documentation '''
-    def __init__(self,filename=None):
-        if '.exe' != filename[-4:len(filename)]:#check the name has postfix ".exe" or not; if not, add ".exe" to the end
-            self.filename = filename+".exe"
-        else:
-            self.filename = filename
-        HWND=self._getHandleThroughFilename()
-        self.HWND = self._chosegamehandle(HWND)
+    def __init__(self):
+        pass
+        #if '.exe' != filename[-4:len(filename)]:#check the name has postfix ".exe" or not; if not, add ".exe" to the end
+        #    self.filename = filename+".exe"
+        #else:
+        #    self.filename = filename
+        #HWND=self._getHandleThroughFilename()
+        #self.HWND = self._chosegamehandle(HWND)
         # print 'HWND:', self.HWND
-        if not self.HWND:
-            raise Exception('Can not find target application process')
+        #if not self.HWND:
+        #    raise Exception('Can not find target application process')
         
     def _getHandleThroughFilename(self):
         Psapi = ctypes.WinDLL('Psapi.dll')
@@ -215,10 +216,10 @@ class Device():
     
     def snapshot(self, filename=None ):
         ''' Capture device screen '''
-        range_ = self._range()
-        win32gui.SetForegroundWindow(self.HWND)
+        #range_ = self._range()
+        #win32gui.SetForegroundWindow(self.HWND)
         time.sleep(0.1)
-        pic = ImageGrab.grab(range_)
+        pic = ImageGrab.grab()
         if filename !=None:
             pic.save(filename)
         return pic
@@ -226,11 +227,11 @@ class Device():
     def touch(self, x, y, duration=0.1):
         ''' Simulate touch '''
         (ox, oy) = self.mouseposition() # remember mouse position
-        x, y = self._resetpt(x, y)
+        #x, y = self._resetpt(x, y)
         win32api.SetCursorPos((x,y))
 
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
-        time.sleep(duration)
+        time.sleep(0.1)
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
         win32api.SetCursorPos((ox,oy)) # move back mouse position
 
@@ -238,8 +239,8 @@ class Device():
     def drag(self, (x1, y1), (x2, y2), duration=0.5):
         ''' Simulate drag '''
         (ox, oy) = self.mouseposition() # remember mouse position
-        x1, y1 = self._resetpt(x1, y1)
-        x2, y2 = self._resetpt(x2, y2)
+        #x1, y1 = self._resetpt(x1, y1)
+        #x2, y2 = self._resetpt(x2, y2)
         win32api.SetCursorPos((x1, y1))
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
         autopy.mouse.smooth_move(x2, y2)
