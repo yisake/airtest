@@ -184,7 +184,7 @@ class Device(object):
 
     def snapshot(self, filename):
         ''' save screen snapshot '''
-        if self._snapshot_method == 'adb':
+        if self._snapshot_method == 'screencap':
             log.debug('start take snapshot(%s)'%(filename))
             self.adbclient.display['orientation'] = self.rotation()
             pil = self.adbclient.takeSnapshot(reconnect=True)
