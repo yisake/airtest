@@ -143,7 +143,7 @@ class Device(object):
         #    self.adbclient = AdbClient(serialno)
 
         # self.adbclient, self._serialno = ViewClient.connectToDeviceOrExit(verbose=False, serialno=serialno, ignoreversioncheck=True)
-        self.adbclient.setReconnect(True) # this way is more stable
+        #self.adbclient.setReconnect(True) # this way is more stable
 
         # self.vc = ViewClient(self.adbclient, serialno, autodump=False)
 
