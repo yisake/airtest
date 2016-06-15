@@ -135,11 +135,12 @@ class Device(object):
             self.resolution = 'resolution'
             print self.resolution
         
-        if addr:
-            host, port = addr.split(':')
-            self.adbclient = AdbClient(serialno, hostname=host, port=int(port))
-        else:
-            self.adbclient = AdbClient(serialno)
+        #Commit by春峰：2016/6/15
+        #if addr:
+        #    host, port = addr.split(':')
+        #    self.adbclient = AdbClient(serialno, hostname=host, port=int(port))
+        #else:
+        #    self.adbclient = AdbClient(serialno)
 
         # self.adbclient, self._serialno = ViewClient.connectToDeviceOrExit(verbose=False, serialno=serialno, ignoreversioncheck=True)
         self.adbclient.setReconnect(True) # this way is more stable
@@ -184,7 +185,7 @@ class Device(object):
 
     def snapshot(self, filename):
         ''' save screen snapshot '''
-        if self._snapshot_method == 'screencap':
+        if self._snapshot_method == 'adb':
             log.debug('start take snapshot(%s)'%(filename))
             self.adbclient.display['orientation'] = self.rotation()
             pil = self.adbclient.takeSnapshot(reconnect=True)
